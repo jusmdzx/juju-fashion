@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Juju Fashion - Vitrine JS</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <nav>
+        <span style="color: white; font-size: 18px; font-weight: bold;">🌎 Catálogo Internacional (Versão HTML)</span>
+    </nav>
+
+    <header>
+        <h1>Mundo da Moda</h1>
+        <p>Importados via API com JavaScript</p>
+
+        <div style="margin-top: 20px;">
+            <button onclick="carregarRoupas('women\'s clothing')" class="btn-cat" style="background:#e91e63;">👩 Feminino</button>
+            <button onclick="carregarRoupas('men\'s clothing')" class="btn-cat" style="background:#3498db;">👨 Masculino</button>
+            <button onclick="carregarRoupas('jewelery')" class="btn-cat" style="background:#f1c40f; color:black;">💍 Joias</button>
+            <button onclick="carregarRoupas('electronics')" class="btn-cat" style="background:#34495e;">💻 Eletrônicos</button>
+        </div>
+    </header>
+
+    <div class="container" id="vitrine">
+        <p style="text-align:center">Carregando produtos...</p>
+    </div>
+
+    <script>
+        // Função que vai buscar os dados (substituto do PHP file_get_contents)
+        async function carregarRoupas(categoria) {
+            const vitrine = document.getElementById('vitrine');
+            vitrine.innerHTML = '<p style="text-align:center">Carregando...</p>';
+
+            // Monta a URL
+            const url = `https://fakestoreapi.com/products/category/${categoria}`;
+
+            try {
+                // Vai buscar os dados
+                const resposta = await fetch(url);
+                const produtos = await resposta.json();
+
+                // Limpa a tela
+                vitrine.innerHTML = '';
+
+                // Para cada produto, cria o HTML
+                produtos.forEach(produto => {
+                    // Converte Dólar pra Real (fake)
+                    const precoReal = (produto.price * 5.60).toFixed(2).replace('.', ',');
+
+                    // Cria o cartão
+                    const card = `
+                        <div class="produto-card">
+                            <img src="${produto.image}" alt="Foto">
+                            <div class="info">
+                                <h3>${produto.title.substring(0, 30)}...</h3>
+                                <div class="preco">R$ ${precoReal}</div>
+                                <button style="background:#333; color:white;" onclick="alert('Feito com JavaScript!')">
+                                    Ver Detalhes
+                                </button>
+                            </div>
+                        </div>
+                    `;
+                    
+                    // Adiciona na tela
+                    vitrine.innerHTML += card;
+                });
+
+            } catch (erro) {
+                vitrine.innerHTML = '<p>Erro ao carregar produtos :(</p>';
+            }
+        }
+
+        // Carrega roupas femininas assim que abrir a página
+        carregarRoupas("women's clothing");
+    </script>
+
+</body>
+</html>
