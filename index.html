@@ -2,79 +2,201 @@
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <title>Juju Fashion - Vitrine JS</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cinnamon Roses Store</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
 
     <nav>
-        <span style="color: white; font-size: 18px; font-weight: bold;">🌎 Catálogo Internacional (Versão HTML)</span>
+        <span class="logo-menu">CINNAMON.ROSES</span>
+        
+        <div class="cart-icon" onclick="abrirCarrinho()">
+            <i class="fa-solid fa-shopping-bag"></i>
+            <span id="contagem-carrinho">0</span>
+        </div>
     </nav>
 
     <header>
-        <h1>Mundo da Moda</h1>
-        <p>Importados via API com JavaScript</p>
+        <h1>Cinnamon Roses</h1>
+        <p>Dark Aesthetic & Vintage Soul</p>
 
-        <div style="margin-top: 20px;">
-            <button onclick="carregarRoupas('women\'s clothing')" class="btn-cat" style="background:#e91e63;">👩 Feminino</button>
-            <button onclick="carregarRoupas('men\'s clothing')" class="btn-cat" style="background:#3498db;">👨 Masculino</button>
-            <button onclick="carregarRoupas('jewelery')" class="btn-cat" style="background:#f1c40f; color:black;">💍 Joias</button>
-            <button onclick="carregarRoupas('electronics')" class="btn-cat" style="background:#34495e;">💻 Eletrônicos</button>
+        <div class="filtros">
+            <button class="btn-filtro ativo" onclick="filtrar('todos')">Todos</button>
+            <button class="btn-filtro" onclick="filtrar('Tops')">Tops</button>
+            <button class="btn-filtro" onclick="filtrar('Bottoms')">Bottoms</button>
+            <button class="btn-filtro" onclick="filtrar('Acessórios')">Acessórios</button>
         </div>
     </header>
 
-    <div class="container" id="vitrine">
-        <p style="text-align:center">Carregando produtos...</p>
+    <div class="container" id="vitrine"></div>
+
+    <div id="modal-carrinho" class="modal">
+        <div class="modal-content">
+            <span class="fechar" onclick="fecharCarrinho()">&times;</span>
+            <h2>Seu Carrinho 🥀</h2>
+            <div id="itens-carrinho">
+                <p>Seu carrinho está vazio.</p>
+            </div>
+            <div class="total-carrinho">
+                Total: <span id="valor-total">R$ 0,00</span>
+            </div>
+            <button class="btn-finalizar" onclick="finalizarPedido()">Finalizar no WhatsApp</button>
+        </div>
     </div>
 
     <script>
-        // Função que vai buscar os dados (substituto do PHP file_get_contents)
-        async function carregarRoupas(categoria) {
-            const vitrine = document.getElementById('vitrine');
-            vitrine.innerHTML = '<p style="text-align:center">Carregando...</p>';
-
-            // Monta a URL
-            const url = `https://fakestoreapi.com/products/category/${categoria}`;
-
-            try {
-                // Vai buscar os dados
-                const resposta = await fetch(url);
-                const produtos = await resposta.json();
-
-                // Limpa a tela
-                vitrine.innerHTML = '';
-
-                // Para cada produto, cria o HTML
-                produtos.forEach(produto => {
-                    // Converte Dólar pra Real (fake)
-                    const precoReal = (produto.price * 5.60).toFixed(2).replace('.', ',');
-
-                    // Cria o cartão
-                    const card = `
-                        <div class="produto-card">
-                            <img src="${produto.image}" alt="Foto">
-                            <div class="info">
-                                <h3>${produto.title.substring(0, 30)}...</h3>
-                                <div class="preco">R$ ${precoReal}</div>
-                                <button style="background:#333; color:white;" onclick="alert('Feito com JavaScript!')">
-                                    Ver Detalhes
-                                </button>
-                            </div>
-                        </div>
-                    `;
-                    
-                    // Adiciona na tela
-                    vitrine.innerHTML += card;
-                });
-
-            } catch (erro) {
-                vitrine.innerHTML = '<p>Erro ao carregar produtos :(</p>';
+        // --- DADOS DOS PRODUTOS ---
+        const roupasDark = [
+            {
+                "id": 1,
+                "title": "Minissaia Cybergrunge Cruz",
+                "price": 189.90,
+                "category": "Bottoms",
+                "image": "https://i.pinimg.com/736x/c2/95/62/c295628a21671726bba9e649a7706753.jpg"
+            },
+            {
+                "id": 2,
+                "title": "Top Tube Gótico Drapeado",
+                "price": 89.90,
+                "category": "Tops",
+                "image": "https://i.pinimg.com/736x/54/47/21/544721f41a6d614eaef43000c980bf58.jpg"
+            },
+            {
+                "id": 3,
+                "title": "Top Renda Dark Coquette",
+                "price": 99.90,
+                "category": "Tops",
+                "image": "https://i.pinimg.com/736x/d6/3a/b3/d63ab33beaeceb6aefdc4150362baa07.jpg"
+            },
+            {
+                "id": 4,
+                "title": "Baby Tee Deftones Gothic",
+                "price": 79.90,
+                "category": "Tops",
+                "image": "https://i.pinimg.com/736x/c5/a2/ce/c5a2ce8b35cea4fee0d795133f2633be.jpg"
+            },
+            {
+                "id": 5,
+                "title": "Kit Anéis Prata Boho (5 un)",
+                "price": 49.90,
+                "category": "Acessórios",
+                "image": "https://i.pinimg.com/736x/39/f0/3d/39f03d6a590c9d47c789769694239a1e.jpg"
+            },
+            {
+                "id": 6,
+                "title": "Calça Jeans Flare Lace-Up",
+                "price": 159.90,
+                "category": "Bottoms",
+                "image":"https://i.pinimg.com/736x/ac/6c/45/ac6c45944f00125cc2a48aaba033b72f.jpg"
             }
+        ];
+
+        // Variável do Carrinho
+        let carrinho = [];
+
+        // --- FUNÇÃO 1: EXIBIR VITRINE (Com Filtro) ---
+        function carregarVitrine(filtro = 'todos') {
+            const vitrine = document.getElementById('vitrine');
+            vitrine.innerHTML = '';
+
+            // Filtra os produtos
+            const produtosFiltrados = filtro === 'todos' 
+                ? roupasDark 
+                : roupasDark.filter(p => p.category === filtro);
+
+            produtosFiltrados.forEach(produto => {
+                const preco = produto.price.toFixed(2).replace('.', ',');
+                
+                const card = `
+                    <div class="produto-card">
+                        <img src="${produto.image}" alt="${produto.title}">
+                        <div class="info">
+                            <h3>${produto.title}</h3>
+                            <div class="preco">R$ ${preco}</div>
+                            <button onclick="adicionarAoCarrinho(${produto.id})">
+                                Adicionar ao Carrinho ✚
+                            </button>
+                        </div>
+                    </div>
+                `;
+                vitrine.innerHTML += card;
+            });
         }
 
-        // Carrega roupas femininas assim que abrir a página
-        carregarRoupas("women's clothing");
-    </script>
+        // --- FUNÇÃO 2: LÓGICA DO CARRINHO ---
+        function adicionarAoCarrinho(id) {
+            const produto = roupasDark.find(p => p.id === id);
+            carrinho.push(produto);
+            atualizarCarrinhoUI();
+            alert(`"${produto.title}" adicionado! 🖤`);
+        }
 
+        function atualizarCarrinhoUI() {
+            // Atualiza bolinha vermelha
+            document.getElementById('contagem-carrinho').innerText = carrinho.length;
+
+            // Atualiza lista do modal
+            const lista = document.getElementById('itens-carrinho');
+            lista.innerHTML = '';
+            
+            let total = 0;
+
+            carrinho.forEach((item, index) => {
+                total += item.price;
+                lista.innerHTML += `
+                    <div style="display:flex; justify-content:space-between; margin-bottom:10px; border-bottom:1px solid #333; padding-bottom:5px;">
+                        <span>${item.title}</span>
+                        <span style="color: var(--destaque)">R$ ${item.price.toFixed(2)}</span>
+                        <span style="cursor:pointer; color:red;" onclick="removerDoCarrinho(${index})">✖</span>
+                    </div>
+                `;
+            });
+
+            if(carrinho.length === 0) lista.innerHTML = '<p>Seu carrinho está vazio.</p>';
+
+            document.getElementById('valor-total').innerText = 'R$ ' + total.toFixed(2).replace('.', ',');
+        }
+
+        function removerDoCarrinho(index) {
+            carrinho.splice(index, 1);
+            atualizarCarrinhoUI();
+        }
+
+        // --- FUNÇÃO 3: FINALIZAR (WhatsApp) ---
+        function finalizarPedido() {
+            if (carrinho.length === 0) return alert('Carrinho vazio!');
+
+            let mensagem = "Olá! Gostaria de fazer um pedido na Cinnamon Roses: \n\n";
+            let total = 0;
+
+            carrinho.forEach(item => {
+                mensagem += `- ${item.title} (R$ ${item.price.toFixed(2)})\n`;
+                total += item.price;
+            });
+
+            mensagem += `\n*Total: R$ ${total.toFixed(2)}*`;
+            
+            // Cria o link do Zap (troque pelo seu número se quiser)
+            const link = `https://wa.me//5587999999999?text=${encodeURIComponent(mensagem)}`;
+            window.open(link, '_blank');
+        }
+
+        // Funções do Modal (Visual)
+        function abrirCarrinho() { document.getElementById('modal-carrinho').style.display = 'block'; }
+        function fecharCarrinho() { document.getElementById('modal-carrinho').style.display = 'none'; }
+        
+        // Função de filtrar (muda cor do botão)
+        function filtrar(categoria) {
+            // Remove a classe 'ativo' de todos e adiciona no clicado
+            document.querySelectorAll('.btn-filtro').forEach(btn => btn.classList.remove('ativo'));
+            event.target.classList.add('ativo');
+            carregarVitrine(categoria);
+        }
+
+        // Inicia
+        carregarVitrine();
+    </script>
 </body>
 </html>
