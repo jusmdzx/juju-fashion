@@ -7,7 +7,7 @@
 
 ## 🔗 Demonstração Online
 Acesse a versão atual (Vitrine Front-end) funcionando agora mesmo:
-👉 **[Clique aqui para ver a Cinnamon Roses Online](https://jusmdzx.github.io/juju-fashion/)**
+👉 **[Clique aqui para ver a Cinnamon Roses Online](https://jusmdzx.github.io/cinnamon_roses/)**
 
 ---
 
