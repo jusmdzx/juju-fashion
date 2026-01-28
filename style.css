@@ -139,3 +139,126 @@ h3 { font-family: 'Cinzel', serif; color: var(--texto-titulo); font-size: 1rem; 
     opacity: 1;
     bottom: 50px; /* Sobe um pouquinho */
 }
+
+/* --- BANNER HERO (PERSONALIDADE DA LOJA) --- */
+.banner-hero {
+    /* Imagem de fundo: Rosas escuras/vermelhas */
+    background-image: url('https://images.unsplash.com/photo-1550926707-c50cb77d0a25?q=80&w=1920');
+    background-size: cover;
+    background-position: center;
+    height: 450px; /* Altura do banner */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    position: relative;
+    border-bottom: 4px solid var(--destaque);
+}
+
+/* Camada escura para o texto aparecer bem */
+.banner-hero .overlay {
+    background: rgba(0, 0, 0, 0.7); /* Preto transparente (70%) */
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+.banner-hero h2 {
+    font-family: 'Cinzel', serif;
+    font-size: 3rem; /* Letra grande */
+    color: #fff;
+    text-transform: uppercase;
+    letter-spacing: 4px;
+    margin-bottom: 10px;
+    text-shadow: 0 0 10px rgba(183, 65, 65, 0.5); /* Brilho rosa */
+}
+
+.banner-hero p {
+    font-family: 'Courier Prime', monospace;
+    color: #ccc;
+    font-size: 1.1rem;
+    max-width: 600px;
+    margin-bottom: 25px;
+}
+
+.banner-hero button {
+    background-color: var(--destaque);
+    color: white;
+    border: none;
+    padding: 15px 35px;
+    font-family: 'Cinzel', serif;
+    font-size: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    cursor: pointer;
+    transition: 0.3s;
+    border: 1px solid var(--destaque);
+}
+
+.banner-hero button:hover {
+    background-color: transparent;
+    color: var(--destaque);
+    transform: scale(1.05); /* Aumenta um pouquinho */
+}
+
+/* Ajuste para celular */
+@media (max-width: 600px) {
+    .banner-hero { height: 350px; }
+    .banner-hero h2 { font-size: 2rem; }
+}
+
+
+/* --- RODAPÉ (FOOTER) --- */
+footer {
+    background-color: #000;
+    border-top: 1px solid var(--borda);
+    padding: 40px 20px;
+    margin-top: 50px;
+    text-align: center;
+}
+
+.footer-icons {
+    display: flex;
+    justify-content: center;
+    gap: 50px;
+    margin-bottom: 30px;
+    flex-wrap: wrap; /* Para não quebrar no celular */
+}
+
+.icon-box {
+    color: var(--texto-corpo);
+    transition: 0.3s;
+}
+
+.icon-box:hover {
+    color: var(--destaque);
+    transform: translateY(-5px);
+}
+
+.icon-box i {
+    font-size: 1.8rem;
+    margin-bottom: 10px;
+    color: var(--destaque);
+}
+
+.icon-box p {
+    font-family: 'Courier Prime', monospace;
+    font-size: 0.9rem;
+}
+
+.copyright {
+    border-top: 1px solid #222;
+    padding-top: 20px;
+    color: #555;
+    font-size: 0.9rem;
+}
+
+/* Ajuste celular */
+@media (max-width: 600px) {
+    .footer-icons { gap: 30px; }
+    .icon-box { width: 100%; } /* Um embaixo do outro */
+}
