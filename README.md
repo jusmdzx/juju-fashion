@@ -1,52 +1,65 @@
-# Juju Fashion Store 👗
+# 🌹 Cinnamon Roses Store
 
-Bem-vindo ao repositório da **Juju Fashion**, um projeto de e-commerce desenvolvido para estudo de desenvolvimento web.
+> E-commerce Front-end com estética Dark Vintage/Coquette e Checkout via WhatsApp.
 
-Este projeto possui duas versões integradas neste repositório:
+![Status](https://img.shields.io/badge/Status-Concluído-brightgreen)
+![Tech](https://img.shields.io/badge/Stack-HTML_|_CSS_|_JS-b74141)
 
 ## 🔗 Demonstração Online
-Acesse a versão Front-end (Vitrine) rodando direto no navegador:
-👉 **[Clique aqui para ver o Site Online](https://jusmdzx.github.io/juju-fashion/)**
+Acesse a versão atual (Vitrine Front-end) funcionando agora mesmo:
+👉 **[Clique aqui para ver a Cinnamon Roses Online](https://jusmdzx.github.io/juju-fashion/)**
+
+---
+
+## 💻 Sobre o Projeto
+Este repositório documenta a evolução dos meus estudos em Desenvolvimento Web, dividido em duas fases:
+
+### 1. Versão Atual: Cinnamon Roses (Front-end Focus)
+Localizada na raiz do projeto, é uma **Single Page Application** estática focada em **UX/UI** e **JavaScript Puro**.
+* **Identidade:** Estética Dark Coquette / Grunge.
+* **Funcionalidade:** Carrinho de compras inteligente (Vanilla JS), filtros de categoria e integração com API do WhatsApp para fechar pedidos.
+* **UX:** Uso de notificações "Toast" (avisos discretos) em vez de alertas nativos.
+
+### 2. Versão Legacy: Juju Fashion (Back-end Focus)
+*📁 Disponível na pasta: `/versao_em_php`*
+A primeira versão do projeto, focada em **PHP 8 e MySQL**.
+* Inclui sistema de Login, CRUD de produtos (Criar, Ler, Atualizar, Deletar) e Painel Administrativo.
+* Mantida neste repositório para fins de histórico e estudo de Backend.
+
+---
+
+## ✨ Funcionalidades (Versão Cinnamon Roses)
+
+- [x] **Vitrine Dinâmica:** Renderização de produtos via JSON array e JavaScript.
+- [x] **Carrinho de Compras:** Adição/Remoção de itens e cálculo de total em tempo real.
+- [x] **Filtros de Categoria:** Navegação fluida entre Tops, Bottoms e Acessórios.
+- [x] **Checkout via WhatsApp:** Geração automática do link com o resumo do pedido.
+- [x] **Design Responsivo:** Layout adaptável (Mobile First) com tema Dark Mode.
+- [x] **Banner Hero & UX:** Identidade visual forte com notificações interativas.
 
 ---
 
 ## 🛠️ Tecnologias Utilizadas
 
-### Versão 1: Sistema Completo (Backend)
-* **PHP 8:** Para lógica de login, sessões e CRUD.
-* **MySQL:** Banco de dados para salvar produtos e usuários.
-* **Apache (XAMPP):** Servidor local.
-
-### Versão 2: Vitrine Dinâmica (Frontend)
-* **HTML5 & CSS3:** Estilização responsiva.
-* **JavaScript (Fetch API):** Consumo de dados externos.
-* **FakeStore API:** Integração com catálogo internacional de produtos.
+| Categoria | Tecnologias |
+| :--- | :--- |
+| **Front-end** | HTML5, CSS3 (Variables, Flexbox, Grid), JavaScript (ES6+) |
+| **Back-end (Legacy)** | PHP 8, MySQL (XAMPP Environment) |
+| **Ferramentas** | Git, GitHub Pages, VS Code |
 
 ---
 
 ## 🚀 Como rodar o projeto
 
-### Opção A: Versão Completa (PHP + Banco de Dados)
-Esta versão inclui o Painel Administrativo (Login, Cadastro e Edição de Produtos).
-1.  Instale o [XAMPP](https://www.apachefriends.org/).
-2.  Clone este repositório na pasta `C:\xampp\htdocs`.
-3.  Importe o arquivo `loja_moda.sql` no seu phpMyAdmin (`localhost/phpmyadmin`).
-4.  Configure o arquivo `conexao.php` (se tiver senha no seu banco).
-5.  Acesse `localhost/juju_fashion`.
+### Para ver a versão Cinnamon Roses (Atual):
+1.  Clone o repositório.
+2.  Abra o arquivo `index.html` no seu navegador.
+3.  Pronto! Não requer instalação de servidor.
 
-### Opção B: Versão Vitrine (Apenas HTML/JS)
-Esta versão roda sem instalação, apenas consumindo a API externa.
-1.  Basta abrir o arquivo `index.html` no seu navegador.
-2.  Ou acessar pelo link do GitHub Pages acima.
+### Para ver a versão Juju Fashion (Legacy PHP):
+1.  Mova os arquivos da pasta `/versao_em_php` para a raiz do seu servidor local (ex: `htdocs` do XAMPP).
+2.  Importe o banco de dados `loja_moda.sql` no phpMyAdmin.
+3.  Configure o arquivo `conexao.php`.
 
 ---
-
-## ✨ Funcionalidades
-- [x] Cadastro de Produtos com Upload de Foto (PHP)
-- [x] Edição e Exclusão de Produtos (PHP)
-- [x] Login Administrativo e Segurança de Sessão (PHP)
-- [x] Vitrine com consumo de API Externa (JavaScript)
-- [x] Conversão de moeda em tempo real (Dólar -> Real)
-
----
-Desenvolvido por **Juliana Miranda** 👩‍💻
+Desenvolvido com 🖤 por **Juliana Miranda** 👩‍💻
