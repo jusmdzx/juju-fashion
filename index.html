@@ -46,6 +46,8 @@
         </div>
     </div>
 
+    <div id="toast">Item adicionado ao carrinho</div>
+
     <script>
         // --- DADOS DOS PRODUTOS ---
         const roupasDark = [
@@ -93,15 +95,13 @@
             }
         ];
 
-        // Variável do Carrinho
         let carrinho = [];
 
-        // --- FUNÇÃO 1: EXIBIR VITRINE (Com Filtro) ---
+        // --- FUNÇÃO 1: EXIBIR VITRINE ---
         function carregarVitrine(filtro = 'todos') {
             const vitrine = document.getElementById('vitrine');
             vitrine.innerHTML = '';
 
-            // Filtra os produtos
             const produtosFiltrados = filtro === 'todos' 
                 ? roupasDark 
                 : roupasDark.filter(p => p.category === filtro);
@@ -125,22 +125,30 @@
             });
         }
 
-        // --- FUNÇÃO 2: LÓGICA DO CARRINHO ---
+        // --- FUNÇÃO 2: NOTIFICAÇÃO TOAST (NOVO!) ---
+        function mostrarAviso(mensagem) {
+            const toast = document.getElementById("toast");
+            toast.innerText = mensagem;
+            toast.className = "mostrar"; // Faz aparecer
+            
+            // Faz sumir depois de 3 segundos
+            setTimeout(function(){ toast.className = toast.className.replace("mostrar", ""); }, 3000);
+        }
+
+        // --- FUNÇÃO 3: LÓGICA DO CARRINHO ---
         function adicionarAoCarrinho(id) {
             const produto = roupasDark.find(p => p.id === id);
             carrinho.push(produto);
             atualizarCarrinhoUI();
-            alert(`"${produto.title}" adicionado! 🖤`);
+            
+            // Aqui chamamos o aviso chique em vez do alert
+            mostrarAviso(`${produto.title} adicionado 🌹`);
         }
 
         function atualizarCarrinhoUI() {
-            // Atualiza bolinha vermelha
             document.getElementById('contagem-carrinho').innerText = carrinho.length;
-
-            // Atualiza lista do modal
             const lista = document.getElementById('itens-carrinho');
             lista.innerHTML = '';
-            
             let total = 0;
 
             carrinho.forEach((item, index) => {
@@ -155,7 +163,6 @@
             });
 
             if(carrinho.length === 0) lista.innerHTML = '<p>Seu carrinho está vazio.</p>';
-
             document.getElementById('valor-total').innerText = 'R$ ' + total.toFixed(2).replace('.', ',');
         }
 
@@ -164,9 +171,11 @@
             atualizarCarrinhoUI();
         }
 
-        // --- FUNÇÃO 3: FINALIZAR (WhatsApp) ---
         function finalizarPedido() {
-            if (carrinho.length === 0) return alert('Carrinho vazio!');
+            if (carrinho.length === 0) {
+                mostrarAviso("Seu carrinho está vazio! 🥀");
+                return;
+            }
 
             let mensagem = "Olá! Gostaria de fazer um pedido na Cinnamon Roses: \n\n";
             let total = 0;
@@ -177,25 +186,19 @@
             });
 
             mensagem += `\n*Total: R$ ${total.toFixed(2)}*`;
-            
-            // Cria o link do Zap (troque pelo seu número se quiser)
             const link = `https://wa.me//5587999999999?text=${encodeURIComponent(mensagem)}`;
             window.open(link, '_blank');
         }
 
-        // Funções do Modal (Visual)
         function abrirCarrinho() { document.getElementById('modal-carrinho').style.display = 'block'; }
         function fecharCarrinho() { document.getElementById('modal-carrinho').style.display = 'none'; }
         
-        // Função de filtrar (muda cor do botão)
         function filtrar(categoria) {
-            // Remove a classe 'ativo' de todos e adiciona no clicado
             document.querySelectorAll('.btn-filtro').forEach(btn => btn.classList.remove('ativo'));
             event.target.classList.add('ativo');
             carregarVitrine(categoria);
         }
 
-        // Inicia
         carregarVitrine();
     </script>
 </body>
